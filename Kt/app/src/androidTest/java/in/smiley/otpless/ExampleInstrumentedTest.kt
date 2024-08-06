@@ -1,4 +1,4 @@
-package `in`.knightcoder.otpless
+package `in`.smiley.otpless
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

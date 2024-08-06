@@ -1,4 +1,4 @@
-package `in`.knightcoder.otpless
+package `in`.smiley.otpless
 
 import org.junit.Test
 

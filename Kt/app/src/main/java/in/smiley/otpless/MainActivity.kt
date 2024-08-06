@@ -1,14 +1,13 @@
-package `in`.knightcoder.otpless
+package `in`.smiley.otpless
 
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.View
+import android.util.Log
 import android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -18,14 +17,12 @@ import com.otpless.dto.OtplessRequest
 import com.otpless.dto.OtplessResponse
 import com.otpless.main.OtplessManager
 import com.otpless.main.OtplessView
-
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 class MainActivity : AppCompatActivity() {
     private lateinit var showPreBuildUIButton: Button
-    private lateinit var navigateToHeadlessActivity: Button
-    private lateinit var otplessResponseHandler: View
     private lateinit var otplessView: OtplessView
-    private lateinit var responseTV: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,49 +40,48 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeOtpless() {
-        // Initialise OtplessView in case of both Activity and Fragment
         otplessView = OtplessManager.getInstance().getOtplessView(this)
     }
 
     private fun initializeViews() {
-        // Set the status bar icon color to black
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.R) {
-            window.decorView.getWindowInsetsController()?.setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS)
+            window.decorView.windowInsetsController?.setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS)
         }
 
         showPreBuildUIButton = findViewById(R.id.btn_pre_built_ui)
-        navigateToHeadlessActivity = findViewById(R.id.btn_headless_activity)
-        otplessResponseHandler = findViewById(R.id.otpless_response_handler_pre_built_ui)
-        responseTV = otplessResponseHandler.findViewById(R.id.tv_response)
     }
 
     private fun setOnClickListeners() {
         showPreBuildUIButton.setOnClickListener {
             showPreBuiltUI()
         }
-
-        navigateToHeadlessActivity.setOnClickListener {
-            startActivity(Intent(this, HeadlessActivity::class.java))
-        }
-
-        otplessResponseHandler.findViewById<Button>(R.id.btn_copy_response).setOnClickListener {
-            val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Otpless Response", responseTV.text)
-            clipboard.setPrimaryClip(clip)
-            Toast.makeText(this, "Response Copied!", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun showPreBuiltUI() {
-        val request = OtplessRequest("F4G12HX4JS7SQNYY19L0") // add your app id
+        val request = OtplessRequest("F4G12HX4JS7SQNYY19L0")
         otplessView.setCallback(request, this::onOtplessCallback)
         otplessView.showOtplessLoginPage(request, this::onOtplessCallback)
         otplessView.verifyIntent(intent)
     }
 
     private fun onOtplessCallback(response: OtplessResponse) {
-        otplessResponseHandler.visibility = View.VISIBLE
-        responseTV.text = if (response.errorMessage != null) response.errorMessage else response.data.toString()
+
+        val gson: Gson = GsonBuilder().setPrettyPrinting().create()
+        val jsonResponse = if (response.errorMessage != null) {
+            gson.toJson(response.errorMessage)
+        } else {
+            gson.toJson(response.data)
+        }
+
+        val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Otpless Response", jsonResponse)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(this, "Copied Successfully", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, ResponseActivity::class.java)
+        intent.putExtra("RESPONSE", jsonResponse)
+        startActivity(intent)
+        Log.d("OtplessCallback", "Response: $jsonResponse")
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -94,7 +90,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        // make sure you call this code before super.onBackPressed();
         if (otplessView.onBackPressed()) return
         super.onBackPressed()
     }
