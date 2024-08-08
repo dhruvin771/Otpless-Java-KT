@@ -18,7 +18,7 @@
             android:name=".ResponseActivity"
             android:exported="false" />
         <activity
-            android:name=".HeadlessActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop">
             <intent-filter>

@@ -23,17 +23,4 @@
         android:textColor="@color/white"
         android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/whatsapp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:paddingHorizontal="50dp"
-        android:backgroundTint="@color/black"
-        android:gravity="center"
-        android:paddingVertical="8dp"
-        android:text="@string/whatsapp"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
-
 </LinearLayout>

@@ -13,22 +13,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.otpless.dto.HeadlessChannelType
-import com.otpless.dto.HeadlessRequest
-import com.otpless.dto.HeadlessResponse
 import com.otpless.dto.OtplessRequest
 import com.otpless.dto.OtplessResponse
 import com.otpless.main.OtplessManager
 import com.otpless.main.OtplessView
-import com.otpless.utils.Utility
-
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 
 class MainActivity : AppCompatActivity() {
     private lateinit var showPreBuildUIButton: Button
-    private lateinit var whatsappButton: Button
-
     private lateinit var otplessView: OtplessView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,17 +49,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         showPreBuildUIButton = findViewById(R.id.btn_pre_built_ui)
-        whatsappButton = findViewById(R.id.whatsapp)
-
     }
 
     private fun setOnClickListeners() {
         showPreBuildUIButton.setOnClickListener {
             showPreBuiltUI()
-        }
-
-        whatsappButton.setOnClickListener {
-            startActivity(Intent(this, HeadlessActivity::class.java))
         }
     }
 
@@ -76,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         otplessView.showOtplessLoginPage(request, this::onOtplessCallback)
         otplessView.verifyIntent(intent)
     }
-
 
     private fun onOtplessCallback(response: OtplessResponse) {
 
