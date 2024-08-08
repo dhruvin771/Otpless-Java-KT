@@ -26,6 +26,16 @@
         android:gravity="center">
 
         <Button
+            android:id="@+id/mobilenoButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:backgroundTint="#25D366"
+            android:padding="10dp"
+            android:text="@string/login_with_mobilenumber"
+            android:textColor="@color/white" />
+
+        <Button
             android:id="@+id/whatsappButton"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -66,5 +76,11 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
+
+    <com.google.android.material.bottomsheet.BottomSheetDragHandleView
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
 </LinearLayout>

@@ -7,6 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.gson.Gson
+import com.google.gson.JsonParser
+import com.google.gson.JsonSyntaxException
 
 class ResponseActivity : AppCompatActivity() {
     private lateinit var responseTV: TextView
@@ -27,10 +30,19 @@ class ResponseActivity : AppCompatActivity() {
 
         val response = intent.getStringExtra("RESPONSE")
 
-        responseTV.text = response
+        responseTV.text = formatJson(response)
 
         backButton.setOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private fun formatJson(response: String?): String {
+        return try {
+            val jsonElement = JsonParser.parseString(response)
+            Gson().newBuilder().setPrettyPrinting().create().toJson(jsonElement)
+        } catch (e: JsonSyntaxException) {
+            "Invalid JSON format"
         }
     }
 }

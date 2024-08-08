@@ -5,4 +5,5 @@
     <string name="login_with_apple">Login with Apple</string>
     <string name="login_with_google">Login with Google</string>
     <string name="login_with_whatsapp">Login with Whatsapp</string>
+    <string name="login_with_mobilenumber">Login with Mobile No</string>
 </resources>

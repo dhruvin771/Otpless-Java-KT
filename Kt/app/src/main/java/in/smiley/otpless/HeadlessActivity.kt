@@ -21,13 +21,14 @@ import com.otpless.main.OtplessManager
 import com.otpless.main.OtplessView
 import com.otpless.utils.Utility
 
-
 class HeadlessActivity : AppCompatActivity() {
     private lateinit var otplessView: OtplessView
     private lateinit var whatsappButton: Button
     private lateinit var googleButton: Button
     private lateinit var appleButton: Button
     private lateinit var trueCallerButton: Button
+    private lateinit var mobilenoButton: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -78,14 +79,10 @@ class HeadlessActivity : AppCompatActivity() {
                 }
             }
         } else {
-            // handle error
             val error = response.response?.optString("errorMessage")
             Toast.makeText(applicationContext, error, Toast.LENGTH_SHORT).show()
-
         }
         Log.d("Otpless Callback", "Response: $response.toString()")
-
-
     }
 
     override fun onBackPressed() {
@@ -129,6 +126,11 @@ class HeadlessActivity : AppCompatActivity() {
                     .show()
             }
         }
+
+        mobilenoButton.setOnClickListener {
+            val bottomSheetFragment = BottomSheetFragment()
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
+        }
     }
 
     private fun isTruecallerInstalled(): Boolean {
@@ -147,5 +149,7 @@ class HeadlessActivity : AppCompatActivity() {
         googleButton = findViewById(R.id.googleButton)
         appleButton = findViewById(R.id.appleButton)
         trueCallerButton = findViewById(R.id.trueCallerButton)
+        mobilenoButton = findViewById(R.id.mobilenoButton)
+
     }
 }
