@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPreBuiltUI() {
-        val request = OtplessRequest("F4G12HX4JS7SQNYY19L0")
+        val request = OtplessRequest("appid")
         otplessView.setCallback(request, this::onOtplessCallback)
         otplessView.showOtplessLoginPage(request, this::onOtplessCallback)
         otplessView.verifyIntent(intent)

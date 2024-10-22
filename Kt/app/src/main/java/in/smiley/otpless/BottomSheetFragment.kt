@@ -81,7 +81,7 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun initializeOtpless(savedInstanceState: Bundle?) {
         otplessView = OtplessManager.getInstance().getOtplessView(activity)
-        otplessView.initHeadless("F4G12HX4JS7SQNYY19L0", savedInstanceState)
+        otplessView.initHeadless("appid", savedInstanceState)
         otplessView.setHeadlessCallback(this::onHeadlessCallback)
     }
 

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialise OtplessView
         otplessView = OtplessManager.getInstance().getOtplessView(this);
-        OtplessRequest request = new OtplessRequest("F4G12HX4JS7SQNYY19L0")
+        OtplessRequest request = new OtplessRequest("appid")
                 .addExtras("crossButtonHidden","true");
         otplessView.setCallback(request, this::onOtplessCallback);
         otplessView.showOtplessLoginPage(request, this::onOtplessCallback);
