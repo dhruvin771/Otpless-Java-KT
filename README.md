@@ -1,4 +1,4 @@
-# Otpless Authentication 
+# Otpless Auth
 
 This project demonstrates an otpless authentication system using Java and Kotlin, designed to provide a secure and seamless login experience without the need for traditional One-Time Passwords (OTPs).
 
